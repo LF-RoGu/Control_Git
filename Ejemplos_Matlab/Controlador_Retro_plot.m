@@ -37,7 +37,7 @@ C = [1, 0, 0, 0];
 
 Mc = [B, A*B, A^2 * B, A^3 * B];clc
 
-H = [( A - Pd(1)*eye(4) )*( A - Pd(2)*eye(4) )*( A - Pd(3)*eye(4) )*( A - Pd(4)*eye(4) )];
+H = ( A - Pd(1)*eye(4) )*( A - Pd(2)*eye(4) )*( A - Pd(3)*eye(4) )*( A - Pd(4)*eye(4) );
 
 K = -[0, 0, 0, 1]*Mc^-1*H;
 
@@ -46,6 +46,7 @@ F = 1 / (C*(-A-B*K)^-1*B);
 %Dif Eq
 [t,X] = ode45(@Controlador_Retro_sys,tspan,x0);
 
+close all;
 figure;
 subplot(4,1,1);plot(t,X(:,1));title('Estado 1');
 subplot(4,1,2);plot(t,X(:,2));title('Estado 2');
@@ -55,7 +56,7 @@ subplot(4,1,4);plot(t,X(:,4));title('Estado 4');
 y_ref = 2;
 U = X*K' + F*y_ref;
 
-maxU = max(abs(U));
+maxU = max(abs(U))
 
 figure;
 subplot(2,1,1);plot(t,C*X', 'r',t,y_ref);title('SALIDA');grid;
