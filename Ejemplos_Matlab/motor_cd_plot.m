@@ -6,7 +6,7 @@ global A B C D K F
 R = 15;
 L = 5*(10^-3);
 Jm = 8.5*(10^-6);
-B = 3.5*(10^-7);
+beta = 3.5*(10^-7);
 Kt = 12*(10^-3);
 Kb = 12*(10^-3);
 
@@ -14,7 +14,7 @@ Kb = 12*(10^-3);
 a = R/L;
 b = Kb/L;
 c = Kt/Jm;
-d = B/Jm;
+d = beta/Jm;
 
 e = 1/L;
 
@@ -42,6 +42,10 @@ maxU = max( abs(U) )
 figure;
 subplot(2,1,1); plot(t, X(:,1)); title('ESTADO 1: i(t)'); grid;
 subplot(2,1,2); plot(t, X(:,2)); title('ESTADO 2: w(t)'); grid;
+
+figure;
+subplot(2,1,1); plot(t, X*C',t,ref,'red'); title('SALIDA Y REFERENCIA'); grid;
+subplot(2,1,2); plot(t, U); title('ENTRADA'); grid;
 
 end
 
