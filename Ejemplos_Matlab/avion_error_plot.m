@@ -1,3 +1,11 @@
+
+tspan = [0, 10];
+x0 = [0,0,0];
+Pd = -10;
+
+avion_error_plot(tspan, x0, Pd);
+
+%% Functions
 function avion_error_plot(tspan, x0, Pd)
 
 global A B C D Ke
@@ -24,12 +32,14 @@ Ke = Pd;
 
 [t,X] = ode45(@avion_error_sys,tspan,x0);
 
-ref = 1.5;
+%ref = 1.5;
+ref = 1.5*sin(t);
 
+%dref = 0;
 dref = 1.5*cos(t);
 
 e = ref - X*C';
-U = (C*B)^-1*(dref - X*(C*A)' - Ke*e);
+U = inv(C*B)*(dref - X*(C*A)' - Ke*e);
 
 figure;
 subplot(3,1,1);plot(t,X(:,1));title('Estado 1');
@@ -47,13 +57,15 @@ function dX = avion_error_sys(t, X)
 
 global A B C D Ke
 
-ref = 1.5;
+%ref = 1.5;
+ref = 1.5*sin(t);
 
+%dref = 0;
 dref = 1.5*cos(t);
 
 e = ref - C*X;
 
-U = (C*B)^-1*(dref * C*A*X - Ke*e);
+U = inv(C*B)*(dref * C*A*X - Ke*e);
 
 dX = A*X + B*U;
 
